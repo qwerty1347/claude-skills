@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Claude Code 스킬 문서
+    url: https://code.claude.com/docs/en/skills
+    about: 스킬 자체의 사양·frontmatter·설치 범위는 공식 문서를 먼저 확인하세요.
+  - name: revfactory/harness
+    url: https://github.com/revfactory/harness
+    about: 이 저장소가 구조를 참고한 원본. 에이전트 팀 생성이 필요하면 여기를 보세요.

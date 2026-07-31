@@ -1,0 +1,16 @@
+# OS
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editor
+.vscode/
+.idea/
+*.swp
+
+# Claude Code 로컬 설정 (개인 환경)
+.claude/settings.local.json
+
+# 실행 중 산출물 — 남길 것만 골라서 강제 추가한다
+_workspace/*
+!_workspace/README.md

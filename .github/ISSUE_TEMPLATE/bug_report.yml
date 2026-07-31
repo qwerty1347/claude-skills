@@ -1,0 +1,59 @@
+name: 버그 리포트
+description: 스킬이 안 불려오거나, 불려왔는데 결과가 잘못될 때
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: symptom
+    attributes:
+      label: 증상
+      description: 고쳐야 할 곳이 증상에 따라 다릅니다.
+      options:
+        - 스킬이 안 불려온다 (트리거 문제)
+        - 엉뚱한 상황에도 불려온다 (과잉 트리거)
+        - 다른 스킬이 대신 불려온다 (description 충돌)
+        - 불려왔는데 결과가 잘못됐다 (본문 문제)
+        - 설치/링크가 안 된다
+    validations:
+      required: true
+
+  - type: input
+    id: skill
+    attributes:
+      label: 스킬 이름
+      placeholder: new-skill
+    validations:
+      required: true
+
+  - type: textarea
+    id: input
+    attributes:
+      label: 입력한 문장
+      description: 요약하지 말고 실제로 친 문장을 그대로 붙여넣으세요. 이게 수정의 재료입니다.
+      render: text
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 기대한 결과
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: 실제 결과
+    validations:
+      required: true
+
+  - type: textarea
+    id: env
+    attributes:
+      label: 환경
+      value: |
+        - OS:
+        - Claude Code 버전:
+        - 설치 방식: 정션 링크 / 플러그인
+    validations:
+      required: false

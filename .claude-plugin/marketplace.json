@@ -1,0 +1,15 @@
+{
+  "name": "harness-marketplace",
+  "owner": {
+    "name": "leekh",
+    "url": "https://github.com/qwerty1347"
+  },
+  "plugins": [
+    {
+      "name": "harness",
+      "source": "./",
+      "description": "반복되는 지시를 스킬로 굳히는 개인 하네스. 새 스킬 뼈대 생성 · description 작성 · 트리거 검증.",
+      "version": "0.1.0"
+    }
+  ]
+}
