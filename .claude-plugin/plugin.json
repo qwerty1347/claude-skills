@@ -3,11 +3,11 @@
   "description": "반복되는 지시를 스킬로 굳히는 개인 하네스. 새 스킬의 뼈대 생성부터 description 작성, 트리거 검증까지 한 흐름으로 처리한다.",
   "version": "0.1.0",
   "author": {
-    "name": "songwg",
-    "url": "https://github.com/YOUR_HANDLE"
+    "name": "leekh",
+    "url": "https://github.com/qwerty1347"
   },
-  "homepage": "https://github.com/YOUR_HANDLE/harness",
-  "repository": "https://github.com/YOUR_HANDLE/harness",
+  "homepage": "https://github.com/qwerty1347/harness",
+  "repository": "https://github.com/qwerty1347/harness",
   "license": "MIT",
   "keywords": [
     "harness",
