@@ -1,0 +1,118 @@
+---
+name: commit
+description: 현재 변경사항을 검토하고 Conventional Commits 형식으로 커밋한다. push 는 하지 않는다. "커밋해줘", "이거 커밋", "지금까지 작업 커밋해줘" 에 해당하는 작업.
+disable-model-invocation: true
+allowed-tools: Bash(git status *) Bash(git diff *) Bash(git log *) Bash(git add *) Bash(git commit *)
+---
+
+# 커밋
+
+변경사항을 읽고 Conventional Commits 형식으로 커밋한다. **push 는 하지 않는다.**
+커밋은 로컬이라 되돌릴 수 있지만 push 는 남에게 나간다.
+
+git 명령은 Bash 로 실행한다. 허용 목록이 Bash 기준이라 다른 셸로 돌리면 매번 승인을 묻는다.
+
+## 1. 무엇이 바뀌었는지 본다
+
+```
+git status
+git diff
+git diff --staged
+```
+
+`git status` 만 보고 메시지를 쓰지 않는다. 파일 이름만으로는 무엇을 왜 바꿨는지 알 수 없어서
+`update files` 같은 쓸모없는 메시지가 나온다.
+
+변경이 하나도 없으면 여기서 멈추고 사용자에게 알린다. 빈 커밋을 만들지 않는다.
+
+## 2. 스테이징 범위를 정한다
+
+- 이미 스테이징된 것이 있으면 **그것만** 커밋한다. 사용자가 의도적으로 고른 것이다
+- 스테이징된 것이 없으면 변경 전체를 담되, 담을 목록을 먼저 보여준다
+- 서로 무관한 변경이 섞여 있으면 나눠서 커밋할지 묻는다
+
+커밋 전에 확인한다.
+
+- `.env`, 키 파일, 인증서, 토큰이 포함되지 않았는가
+- 디버그용 임시 코드나 주석이 남아 있지 않은가
+
+## 3. 메시지를 쓰고 커밋한다
+
+아래 참고 절을 따라 형식을 맞춘다. 한 줄이면:
+
+```
+git commit -m "feat: 변경사항 검토 후 커밋하는 스킬 추가"
+```
+
+본문이 필요하면 heredoc 을 쓴다.
+
+```
+git commit -F - <<'EOF'
+fix: 메모장이 세션을 붙잡는 문제 수정
+
+Start-Process 로 띄우면 자식 프로세스가 출력 파이프를 물고 있어
+창을 닫을 때까지 호출이 끝나지 않았다. cmd 의 start 로 완전히 분리한다.
+EOF
+```
+
+## 4. 결과를 보여준다
+
+```
+git log --oneline -1
+```
+
+---
+
+## 참고 — Conventional Commits 1.0.0
+
+```
+<type>: <설명>
+
+[본문]
+
+[꼬리말]
+```
+
+**`scope` 는 쓰지 않는다.** 명세상 선택 항목이고, 저장소가 작을 때는
+`type` 만으로 충분하다. 영역 표기가 오히려 기준이 흔들려 제각각이 된다.
+
+| type | 쓸 때 | 버전 |
+|---|---|---|
+| `feat` | 기능 추가 | MINOR |
+| `fix` | 버그 수정 | PATCH |
+| `docs` | 문서만 변경 (코드 동작 변경 없음) | — |
+| `refactor` | 기능은 그대로, 코드 구조 개선 | — |
+| `test` | 테스트 추가·수정 | — |
+| `chore` | 설정·기능과 직접 관련 없는 유지보수 작업 | — |
+| `build` | 빌드 관련 | — |
+| `ci` | CI 관련 | — |
+| `perf` | 성능 개선 | — |
+| `style` | 코드 스타일 | — |
+| `revert` | 이전 커밋 되돌리기 | — |
+
+**설명**은 50자 안쪽. 마침표를 찍지 않는다.
+
+**본문**은 "왜" 를 적는다. "무엇" 은 `git show` 가 이미 보여주므로 적지 않는다.
+코드만 봐서 이유가 드러나면 본문 자체가 필요 없다.
+
+**호환성이 깨지는 변경**은 꼬리말에 `BREAKING CHANGE:` 를 적는다. MAJOR 에 해당한다.
+
+```
+feat: allow provided config object to extend other configs
+
+BREAKING CHANGE: `extends` key in config file is now used for extending other config files
+```
+
+`type` 뒤에 `!` 를 붙이는 축약형도 명세상 허용되지만(`feat!:`), 꼬리말 쪽을 쓴다.
+무엇이 어떻게 깨지는지 한 줄로 설명해야 읽는 사람이 조치할 수 있다.
+
+`BREAKING CHANGE` 는 **대문자**여야 한다. 나머지는 대소문자를 가리지 않는다.
+
+## 하지 말 것
+
+- **push 하지 않는다.** 요청받아도 이 스킬에서는 하지 않는다
+- `--no-verify` 로 훅을 건너뛰지 않는다. 훅이 막는 데는 이유가 있다
+- 이미 push 된 커밋을 `--amend` 하지 않는다
+- 파일 목록을 커밋 메시지에 나열하지 않는다
+- 변경 내용을 읽지 않고 메시지를 짓지 않는다
+- `type` 을 대충 고르지 않는다. 문서만 고쳤으면 `feat` 이 아니라 `docs` 다
