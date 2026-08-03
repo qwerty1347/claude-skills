@@ -1,57 +1,13 @@
-<div align="center">
+# harness
 
-# Harness — 내 반복 작업을 스킬로 굳히는 곳
-
-**매번 설명하던 절차를 파일로 고정한다. 다음 세션부터는 Claude 가 알아서 꺼내 쓴다.**
-
-![version](https://img.shields.io/badge/version-0.1.0-blue)
-![license](https://img.shields.io/badge/license-MIT-green)
-![claude--code](https://img.shields.io/badge/Claude%20Code-plugin-orange)
-
-</div>
+반복되는 지시를 스킬로 굳혀두는 개인 저장소.
+여기에 만든 스킬은 어느 프로젝트에서든 슬래시 명령으로 쓸 수 있다.
 
 ---
 
-## 개요
+## 설치 (최초 1회)
 
-같은 지시를 세 번째 타이핑하고 있다면, 그건 스킬이 될 자격이 있다.
-
-Harness 는 그 순간을 처리하는 개인 저장소다. `/new-skill` 을 실행하면 스킬 뼈대를 만들고,
-가장 자주 틀리는 부분(`description` 작성과 트리거 검증)까지 끌고 간다.
-
-> 프롬프트를 잘 쓰는 게 아니라, **프롬프트를 잘 쓸 필요가 없게 만드는 것**이다.
-
-## 핵심 기능
-
-| 기능 | 설명 |
-|---|---|
-| 스킬 스캐폴딩 | `skills/{이름}/SKILL.md` 생성, frontmatter 자동 구성 |
-| description 설계 | 트리거 실패의 90%를 차지하는 부분을 실제 발화 기준으로 작성 |
-| 트리거 검증 | 불려와야 할 문장 3개 / 불려오면 안 될 문장 2개로 즉시 확인 |
-| 즉시 반영 | `~/.claude/skills` 정션 링크로 저장하는 즉시 전역 적용 |
-
-## 워크플로
-
-`/new-skill` 은 8단계로 진행한다.
-
-```
-0. 기존 스킬 점검           ← 있으면 새로 만들지 않고 고친다
-1. 무엇을 반복하는지 확인   ← 실제 지시 문장을 그대로 수집
-2. 이름 정하기              ← 동사형, 소문자-하이픈
-3. 범위 정하고 파일 생성    ← 전역이냐 이 프로젝트냐
-4. description 작성         ← 여기가 트리거다
-5. 본문 작성                ← 명령형, 이유 포함, 500줄 이내
-6. 트리거 테스트            ← 만들고 끝내지 않는다
-7. 등록                     ← README, CHANGELOG
-```
-
-자세한 작성 규칙은 [`skills/new-skill/references/skill-writing-guide.md`](skills/new-skill/references/skill-writing-guide.md) 참고.
-
-## 설치
-
-### 방법 A — 정션 링크 (개발용, 권장)
-
-이 저장소를 직접 수정하면서 쓴다. 저장 즉시 반영된다.
+`~/.claude/skills` 를 이 저장소의 `skills/` 로 연결한다. 이후 파일을 저장하면 즉시 반영된다.
 
 ```powershell
 cd <이-저장소-경로>
@@ -60,130 +16,158 @@ New-Item -ItemType Junction `
   -Target "$PWD\skills"
 ```
 
-Claude Code 재시작 후 `/new-skill` 이 자동완성에 뜨면 성공.
+Claude Code 를 재시작하고 슬래시 명령이 자동완성에 뜨면 성공.
 
-해제:
+> macOS · Linux:
+> `cd ~/projects/harness`
+> `ln -s "$PWD/skills" ~/.claude/skills`
+
+### 실 데이터 예
 
 ```powershell
-Remove-Item "$env:USERPROFILE\.claude\skills" -Force
+New-Item -ItemType Junction `
+  -Path   "C:\Users\lee\.claude\skills" `
+  -Target "C:\xampp\htdocs\www\projects\harness\skills"
 ```
 
-> 복사본이 아니라 **링크**다. 실체는 이 저장소의 `skills/` 하나뿐이고,
-> 위 명령은 링크만 끊는다. 단, 링크를 타고 들어가 파일을 지우면 원본이 지워진다.
->
-> 저장소를 다른 폴더로 옮기면 링크는 옛 경로를 계속 가리킨다. 옮긴 뒤에는 다시 걸 것.
+### 다시 명렁어 입력어 하는 경우
 
-### 방법 B — 플러그인 설치 (배포용)
+저장소를 다른 폴더로 옮겼거나, 링크를 지웠거나, 다른 PC 에서 쓸 때. 그 외에는 최초 1회로 끝이다.
 
-GitHub 에 올린 뒤 다른 PC 에서 쓸 때.
+이미 걸려 있는 상태에서 위 명령을 실행하면 경로가 존재한다는 에러가 난다. 먼저 끊는다. (`-Recurse` 를 붙이지 않는다. 링크를 타고 들어가 원본 파일까지 지운다.)
 
-```
-/plugin marketplace add YOUR_HANDLE/harness
-/plugin install harness@harness-marketplace
+```powershell
+Remove-Item "C:\Users\gng\.claude\skills" -Force
 ```
 
-> A 와 B 를 동시에 쓰지 말 것. 같은 스킬이 두 번 로드된다.
+### 확인 방법 명령어
 
-## 구조
-
-```
-harness/
-├── .claude-plugin/
-│   ├── plugin.json          # 플러그인 메타
-│   └── marketplace.json     # 마켓플레이스 등록 정보
-├── docs/
-│   └── quickstart.md        # 5분 안에 첫 스킬 만들기
-├── skills/
-│   └── new-skill/
-│       ├── SKILL.md         # 본체 (500줄 이내로 유지)
-│       └── references/      # 필요할 때만 읽히는 상세 문서
-│           └── skill-writing-guide.md
-├── _workspace/              # 실행 중 산출물 (감사용 보존)
-├── CHANGELOG.md
-├── CONTRIBUTING.md
-├── LICENSE
-└── README.md
+```powershell
+Get-Item "C:\Users\gng\.claude\skills" | Select-Object LinkType, Target
 ```
 
-`skills/` 아래 폴더 하나가 스킬 하나이고, 폴더 이름이 그대로 슬래시 명령이 된다.
-(`skills/new-skill/` → `/new-skill`)
+### 확인 결과
 
-## 사용법
+```
+LinkType Target
+-------- ------
+Junction {C:\xampp\htdocs\www\projects\harness\skills}
+```
 
-### 트리거 문장
+## 스킬 추가하기
 
-명시적으로 부르거나:
+### 1. 만들 대상을 고른다
+
+- 같은 지시를 **세 번 이상** 타이핑했다
+- 절차가 말로 설명된다
+- 결과물을 보고 잘 됐는지 **바로 판단**할 수 있다
+
+셋을 다 만족하지 않으면 만들지 않는다. 한 번 하고 말 작업에 스킬을 만들면 관리 대상만 늘어난다.
+
+### 2. `/new-skill` 을 실행한다
 
 ```
 /new-skill
 ```
 
-또는 자연스럽게 말해도 걸린다:
+물어보는 것에 답하면 된다. **"지금은 매번 어떻게 지시하나"** 에는 요약하지 말고
+실제로 쳤던 문장을 그대로 준다. 그 문장이 `description` 이 되고, 그게 트리거가 된다.
 
-- "이 작업 스킬로 만들자"
-- "매번 똑같이 시키는 게 귀찮다"
-- "이거 자동화하고 싶어"
+### 3. 파일이 생겼는지 본다
 
-### 스킬 목록
+```
+skills/{이름}/
+└── SKILL.md          # 폴더 이름이 곧 /명령 이 된다
+```
+
+`references/`, `scripts/`, `assets/` 는 필요할 때만 만든다. 대개 `SKILL.md` 하나면 된다.
+
+새 폴더라 인식이 안 되면 Claude Code 를 재시작한다.
+
+### 4. 실제로 돌려본다
+
+만들고 끝내지 않는다. 여기까지가 한 세트다.
+
+| 확인 | 안 되면 |
+|---|---|
+| 평소 말투로 시켰을 때 불려오는가 (3문장) | `description` 에 그 표현을 추가 |
+| 비슷하지만 상관없는 요청에는 안 불려오는가 (2문장) | `description` 범위를 좁힘 |
+| 불려온 뒤 결과가 기대와 같은가 | `SKILL.md` **본문**의 절차를 고침 |
+
+`disable-model-invocation: true` 인 스킬은 위 두 줄을 건너뛰고 동작만 확인한다.
+
+### 5. 설명 문서를 남긴다
+
+`docs/skills/{스킬과-같은-이름}/README.md` 를 만든다. **번호를 붙이지 않는다.**
+
+```
+skills/commit/            →  /commit        ← 명령
+docs/skills/commit/       →  설명 문서
+```
+
+무엇을 적는지는 아래 참고.
+
+### 6. 등록한다
+
+- `README.md` 의 [스킬 목록](#스킬-목록) 표에 한 줄
+- `CHANGELOG.md` 에 한 줄
+- `docs/skills/README.md` 목록에 한 줄
+
+---
+
+## 설명 문서에 적을 것
+
+`docs/skills/{이름}/README.md` 는 **석 달 뒤의 내가 읽을 문서**다.
+결과물이 아니라 **판단**을 남긴다. 스킬 파일을 보면 알 수 있는 것은 적지 않는다.
+
+| 항목 | 내용 |
+|---|---|
+| 무엇을 하는가 | 한 문장. 어떤 반복을 대신하는가 |
+| 왜 만들었는가 | 어떤 상황에서 몇 번 반복했는가 |
+| 어떻게 쓰는가 | 호출 예시 몇 개. 자동 호출인지 `/명령` 전용인지 |
+| 왜 이렇게 만들었는가 | 전역/프로젝트 선택 이유, frontmatter 옵션을 켠 이유 |
+| 함정 | 이 도메인에서 틀리기 쉬운 것 |
+| 검증 | 어떤 시나리오로 확인했는가 |
+| 제작 기록 | 만들면서 판단이 바뀐 부분 |
+
+만들기 **전에** 초안을 써두면 `/new-skill` 의 질문에 그대로 답할 수 있다.
+
+---
+
+## 스킬 목록
 
 | 스킬 | 하는 일 |
 |---|---|
 | `/new-skill` | 새 스킬 뼈대를 만들고 트리거까지 검증한다 |
 
-## 산출물
+---
 
-`/new-skill` 실행 후 생기는 것:
+## 규칙
 
-```
-{이름}/
-├── SKILL.md          # 필수 — name + description frontmatter
-├── references/       # 선택 — 조건부 로딩 문서
-├── scripts/          # 선택 — 매번 다시 짜기 아까운 코드
-└── assets/           # 선택 — 템플릿, 이미지 등
-```
+- `skills/` 아래 **폴더 이름이 곧 명령**이다. 번호를 붙이거나 하위 폴더로 묶지 않는다
+- `SKILL.md` 에 절대경로를 적지 않는다. `${CLAUDE_SKILL_DIR}` · `${CLAUDE_PROJECT_DIR}` 를 쓴다
+- 되돌리기 어려운 동작(커밋·삭제·전송)은 `disable-model-invocation: true` 로 자동 호출을 끈다
+- `allowed-tools` 는 쓸 명령만 나열한다. `Bash(git *)` 처럼 넓게 열지 않는다
+- 본문 500줄을 넘기면 `references/` 로 뺀다
+- 프로젝트별 컨벤션은 스킬이 아니라 그 프로젝트 `CLAUDE.md` 에
 
-위치는 Phase 3 에서 정한 범위에 따라 갈린다.
+---
 
-| 범위 | 생기는 곳 | 커밋되는 저장소 |
-|---|---|---|
-| 전역 | 이 저장소의 `skills/{이름}/` | harness |
-| 프로젝트 전용 | `{그 프로젝트}/.claude/skills/{이름}/` | 그 프로젝트 |
+## 어느 문서를 보나
 
-전역이면 README 의 스킬 목록 표와 `CHANGELOG.md` 에도 한 줄씩 추가된다.
-
-## 요구사항
-
-- Claude Code
-- 설치 명령은 Windows PowerShell 기준. macOS · Linux 는 `New-Item -ItemType Junction` 대신
-  `ln -s "$PWD/skills" ~/.claude/skills` 를 쓴다.
-
-> 저장소 경로는 어디든 상관없다. `SKILL.md` 는 `${CLAUDE_SKILL_DIR}` · `${CLAUDE_PROJECT_DIR}` 만
-> 쓰고 절대경로를 적지 않는다. 그래서 폴더를 옮기거나 남이 클론해도 그대로 동작한다.
-
-> 에이전트 팀(`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS`)은 **아직 필요 없다.**
-> 스킬만 쓰는 단계에서는 플래그 없이 동작한다.
-
-## 로드맵
-
-| 단계 | 시점 |
+| 상황 | 볼 곳 |
 |---|---|
-| 스킬 2~3개 만들어 실제로 써보기 | 지금 |
-| 프로젝트별 `CLAUDE.md` 작성 | 스킬에 프로젝트 컨벤션을 넣고 싶어질 때 |
-| 에이전트 / 팀 도입 | 한 작업을 "생성자 + 검증자"로 나눠야 할 만큼 커졌을 때 |
-| 플러그인 공개 배포 | 남에게 쓰게 하고 싶을 때 |
+| 처음 설치한다 | [`docs/quickstart.md`](docs/quickstart.md) |
+| 스킬을 만든다 | 이 문서의 [스킬 추가하기](#스킬-추가하기) |
+| `description` 이 안 먹힌다 | [`skills/new-skill/references/skill-writing-guide.md`](skills/new-skill/references/skill-writing-guide.md) |
+| 특정 스킬이 왜 이런지 알고 싶다 | `docs/skills/{이름}/README.md` |
+| 커밋·버전 규칙 | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
 
-## 원칙
-
-1. **작게 시작한다.** 에이전트 6개짜리 팀보다 잘 만든 스킬 1개가 낫다.
-2. **description 이 전부다.** 스킬이 안 불려오는 사고의 대부분은 여기서 난다.
-3. **측정하지 않으면 개선이 아니라 취향이다.**
-4. **한 번 하고 말 작업엔 하네스를 쓰지 않는다.**
+---
 
 ## 참고
 
-- [revfactory/harness](https://github.com/revfactory/harness) — 구조를 참고한 원본.
 - [Claude Code Skills 문서](https://code.claude.com/docs/en/skills)
-
-## 라이선스
+- [revfactory/harness](https://github.com/revfactory/harness) — 구조를 참고한 원본
 
 MIT — [LICENSE](LICENSE)
