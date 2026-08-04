@@ -64,16 +64,7 @@ Junction {C:\xampp\htdocs\www\projects\harness\skills}
 
 셋을 다 만족하지 않으면 만들지 않는다. 한 번 하고 말 작업에 스킬을 만들면 관리 대상만 늘어난다.
 
-### 2. `/new-skill` 을 실행한다
-
-```
-/new-skill
-```
-
-물어보는 것에 답하면 된다. **"지금은 매번 어떻게 지시하나"** 에는 요약하지 말고
-실제로 쳤던 문장을 그대로 준다. 그 문장이 `description` 이 되고, 그게 트리거가 된다.
-
-### 3. 파일이 생겼는지 본다
+### 2. 파일을 만든다
 
 ```
 skills/{이름}/
@@ -83,6 +74,18 @@ skills/{이름}/
 `references/`, `scripts/`, `assets/` 는 필요할 때만 만든다. 대개 `SKILL.md` 하나면 된다.
 
 새 폴더라 인식이 안 되면 Claude Code 를 재시작한다.
+
+### 3. frontmatter 를 채운다
+
+```markdown
+---
+name: {폴더와 같은 이름}
+description: 무엇을 하는지 한 문장. 이어서 실제로 쳤던 지시 문장 2~3개.
+---
+```
+
+`description` 이 곧 트리거다. **"지금은 매번 어떻게 지시하나"** 를 요약하지 말고
+실제로 쳤던 문장을 그대로 넣는다. 요약하면 그 말투로 시켰을 때 안 불려온다.
 
 ### 4. 실제로 돌려본다
 
@@ -110,7 +113,6 @@ docs/skills/commit/       →  설명 문서
 ### 6. 등록한다
 
 - `README.md` 의 [스킬 목록](#스킬-목록) 표에 한 줄
-- `CHANGELOG.md` 에 한 줄
 - `docs/skills/README.md` 목록에 한 줄
 
 ---
@@ -130,15 +132,18 @@ docs/skills/commit/       →  설명 문서
 | 검증 | 어떤 시나리오로 확인했는가 |
 | 제작 기록 | 만들면서 판단이 바뀐 부분 |
 
-만들기 **전에** 초안을 써두면 `/new-skill` 의 질문에 그대로 답할 수 있다.
+만들기 **전에** 초안을 써두면 `description` 과 본문 절차를 그대로 옮겨 적을 수 있다.
 
 ---
 
 ## 스킬 목록
 
-| 스킬 | 하는 일 |
-|---|---|
-| `/new-skill` | 새 스킬 뼈대를 만들고 트리거까지 검증한다 |
+| 스킬 | 하는 일 | 호출 |
+|---|---|---|
+| `/api-doc` | 변경된 API 의 명세서를 지정한 양식 HTML 로 만들어 브라우저로 연다. Jira 댓글에 붙여넣는 용도 | 자동 · `/명령` |
+| `/commit` | 변경사항을 검토하고 Conventional Commits 형식으로 커밋한다. push 는 하지 않는다 | `/명령` 전용 |
+
+호출 열의 `/명령` 전용은 `disable-model-invocation: true` 라 말로 시켜서는 안 불려온다는 뜻이다.
 
 ---
 
@@ -157,11 +162,8 @@ docs/skills/commit/       →  설명 문서
 
 | 상황 | 볼 곳 |
 |---|---|
-| 처음 설치한다 | [`docs/quickstart.md`](docs/quickstart.md) |
 | 스킬을 만든다 | 이 문서의 [스킬 추가하기](#스킬-추가하기) |
-| `description` 이 안 먹힌다 | [`skills/new-skill/references/skill-writing-guide.md`](skills/new-skill/references/skill-writing-guide.md) |
 | 특정 스킬이 왜 이런지 알고 싶다 | `docs/skills/{이름}/README.md` |
-| 커밋·버전 규칙 | [`CONTRIBUTING.md`](CONTRIBUTING.md) |
 
 ---
 

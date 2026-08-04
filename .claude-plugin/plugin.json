@@ -1,6 +1,6 @@
 {
   "name": "harness",
-  "description": "반복되는 지시를 스킬로 굳히는 개인 하네스. 새 스킬의 뼈대 생성부터 description 작성, 트리거 검증까지 한 흐름으로 처리한다.",
+  "description": "반복되는 지시를 스킬로 굳히는 개인 하네스. 여기에 만든 스킬은 어느 프로젝트에서든 슬래시 명령으로 쓴다.",
   "version": "0.1.0",
   "author": {
     "name": "leekh",
@@ -11,11 +11,9 @@
   "license": "MIT",
   "keywords": [
     "harness",
-    "skill-factory",
-    "meta-skill",
     "claude-code",
     "claude-code-plugin",
-    "skill-scaffolding",
+    "claude-code-skills",
     "automation"
   ]
 }

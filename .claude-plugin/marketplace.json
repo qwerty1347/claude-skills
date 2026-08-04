@@ -8,7 +8,7 @@
     {
       "name": "harness",
       "source": "./",
-      "description": "반복되는 지시를 스킬로 굳히는 개인 하네스. 새 스킬 뼈대 생성 · description 작성 · 트리거 검증.",
+      "description": "반복되는 지시를 스킬로 굳히는 개인 하네스. 어느 프로젝트에서든 슬래시 명령으로 쓴다.",
       "version": "0.1.0"
     }
   ]
