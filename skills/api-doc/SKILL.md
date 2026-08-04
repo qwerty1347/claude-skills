@@ -1,7 +1,7 @@
 ---
 name: api-doc
 description: Laravel API 명세서를 사내 양식대로 HTML 로 만들고 브라우저로 연다. 사용자가 화면을 드래그 복사해 지라 댓글에 붙여넣는다. "이 API 명세서 만들어줘", "지라에 올릴 API 문서 뽑아줘", "api 스펙 정리해줘" 같은 요청에 사용한다.
-allowed-tools: Bash(git status *) PowerShell(*docs-dir.ps1*) PowerShell(*open-doc.ps1*)
+allowed-tools: Read Glob Grep Write Bash(git status *) PowerShell(*docs-dir.ps1*) PowerShell(*open-doc.ps1*)
 ---
 
 # API 명세서 만들기
@@ -11,32 +11,26 @@ Laravel 프로젝트의 API 명세서를 HTML 로 만든다. 사용자가 그 �
 
 마크다운으로 만들지 않는다. 지라가 변환하지 않는다.
 
-## 0. 문서 폴더를 받는다
+## 1. 문서 폴더를 받는다
 
 **명세서는 지금 작업 중인 프로젝트가 아니라 harness 저장소에 모은다.**
 작업 repo 에 임시 HTML 이 쌓여 `git status` 가 지저분해지는 것을 막기 위한 것이다.
 
-폴더 경로는 직접 조립하지 말고 이 한 줄로 받는다. 폴더가 없으면 만들어서 준다.
+폴더 경로는 직접 조립하지 말고 이 한 줄로 받는다.
 
 ```powershell
 & '${CLAUDE_SKILL_DIR}/scripts/docs-dir.ps1'
 ```
 
-출력된 절대경로(`...\harness\docs\api-docs`)를 이후 단계에서 그대로 쓴다.
+폴더를 만들고, 7일 지난 산출물을 지우고, 절대경로를 출력한다.
+출력된 경로(`...\harness\docs\api-docs`)를 이후 단계에서 그대로 쓴다.
 아래에서 `docs/api-docs/` 라고 쓰면 전부 이 폴더를 뜻한다.
+
+`removed N old file(s)` 가 같이 나오면 그 줄만 사용자에게 전한다.
 
 - **경로를 하드코딩하지 않는다.** PC 마다 harness 위치가 다르다
 - **현재 폴더 기준 상대 경로를 쓰지 않는다.** 작업 중인 프로젝트에 문서가 생긴다
-
-## 1. 오래된 파일을 정리한다
-
-문서를 만들기 전에 먼저 한다.
-
-- `docs/api-docs/` 안을 본다
-- 파일명이 `YYYY-MM-DD_*.html` 형식이고, 그 날짜가 **오늘로부터 7일보다 이전**이면 지운다
-  (오늘이 2026-08-04 면 2026-07-28 이전 파일이 대상)
-- 패턴이 다른 파일은 지우지 않는다. 남이 만든 것일 수 있다
-- 지운 개수를 한 줄로 알린다. 지운 게 없으면 말하지 않는다
+- **파일을 직접 지우지 않는다.** 정리는 이 스크립트만 한다
 
 ## 2. 대상을 정한다
 
@@ -273,5 +267,5 @@ exists:users,id  → INT    + "존재하는 사용자 ID"
 - HTML 소스를 대화창에 출력하지 않는다. 파일로만 만든다
 - 마크다운으로 출력하지 않는다. 지라가 변환하지 않는다
 - `.gitignore` 나 프로젝트 설정 파일을 수정하지 않는다
-- `YYYY-MM-DD_*.html` 패턴이 아닌 파일을 지우지 않는다
+- 파일을 직접 지우지 않는다. 오래된 문서 정리는 `docs-dir.ps1` 이 한다
 - `assets/doc.css` 의 색·여백을 문서마다 바꾸지 않는다
