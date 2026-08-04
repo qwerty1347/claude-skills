@@ -101,14 +101,12 @@ description: 무엇을 하는지 한 문장. 이어서 실제로 쳤던 지시 �
 
 ### 5. 설명 문서를 남긴다
 
-`docs/skills/{스킬과-같은-이름}/README.md` 를 만든다. **번호를 붙이지 않는다.**
+`docs/skills/{스킬과-같은-이름}/DECISIONS.md` 를 만든다. **번호를 붙이지 않는다.**
 
 ```
-skills/commit/            →  /commit        ← 명령
-docs/skills/commit/       →  설명 문서
+skills/commit/                     →  /commit        ← 명령
+docs/skills/commit/DECISIONS.md    →  설명 문서
 ```
-
-무엇을 적는지는 아래 참고.
 
 ### 6. 등록한다
 
@@ -119,7 +117,7 @@ docs/skills/commit/       →  설명 문서
 
 ## 설명 문서에 적을 것
 
-`docs/skills/{이름}/README.md` 는 **석 달 뒤의 내가 읽을 문서**다.
+`docs/skills/{이름}/DECISIONS.md` 는 **석 달 뒤의 내가 읽을 문서**다.
 결과물이 아니라 **판단**을 남긴다. 스킬 파일을 보면 알 수 있는 것은 적지 않는다.
 
 | 항목 | 내용 |
@@ -163,7 +161,7 @@ docs/skills/commit/       →  설명 문서
 | 상황 | 볼 곳 |
 |---|---|
 | 스킬을 만든다 | 이 문서의 [스킬 추가하기](#스킬-추가하기) |
-| 특정 스킬이 왜 이런지 알고 싶다 | `docs/skills/{이름}/README.md` |
+| 특정 스킬이 왜 이런지 알고 싶다 | `docs/skills/{이름}/DECISIONS.md` |
 
 ---
 
