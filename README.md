@@ -1,6 +1,6 @@
 # harness
 
-반복되는 지시를 스킬로 굳혀두는 개인 저장소.
+반복되는 업무를 구조화한 스킬로 만들어 자동화하기 위한 환경
 여기에 만든 스킬은 어느 프로젝트에서든 슬래시 명령으로 쓸 수 있다.
 
 ---
@@ -169,5 +169,3 @@ docs/skills/commit/       →  설명 문서
 
 - [Claude Code Skills 문서](https://code.claude.com/docs/en/skills)
 - [revfactory/harness](https://github.com/revfactory/harness) — 구조를 참고한 원본
-
-MIT — [LICENSE](LICENSE)

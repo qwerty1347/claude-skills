@@ -14,3 +14,6 @@ desktop.ini
 # 실행 중 산출물 — 남길 것만 골라서 강제 추가한다
 _workspace/*
 !_workspace/README.md
+
+# 결과 산출물
+docs/api-docs/*
