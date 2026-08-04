@@ -15,5 +15,5 @@ desktop.ini
 _workspace/*
 !_workspace/README.md
 
-# 결과 산출물
-docs/api-docs/*
+# 결과 산출물 — 스킬이 만든 것. 설명 문서(CLAUDE.md)는 그대로 추적된다
+docs/skills/*/output/*

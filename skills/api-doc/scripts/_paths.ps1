@@ -1,6 +1,7 @@
 ﻿# 공용 경로 해석. open-doc.ps1 / docs-dir.ps1 이 점 소스로 불러 쓴다.
 #
-# 명세서는 실행한 프로젝트가 아니라 harness 저장소의 docs/api-docs/ 에 모은다.
+# 명세서는 실행한 프로젝트가 아니라 harness 저장소의
+# docs/skills/api-doc/output/ 에 모은다.
 # harness 위치는 PC 마다 다르므로 하드코딩하지 않는다.
 # 이 스크립트 자신의 경로에서 거꾸로 찾아간다.
 
@@ -48,5 +49,5 @@ function Get-HarnessRoot {
 }
 
 function Get-ApiDocsDir {
-    return (Join-Path (Get-HarnessRoot) 'docs\api-docs')
+    return (Join-Path (Get-HarnessRoot) 'docs\skills\api-doc\output')
 }

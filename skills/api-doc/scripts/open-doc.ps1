@@ -1,4 +1,4 @@
-﻿# harness 저장소의 docs/api-docs/ 에서 가장 최근 .html 을 브라우저로 연다.
+﻿# harness 저장소의 docs/skills/api-doc/output/ 에서 가장 최근 .html 을 브라우저로 연다.
 # 인자를 받지 않는다 - 명령이 고정되어야 allowed-tools 로 미리 승인된다.
 
 . (Join-Path $PSScriptRoot '_paths.ps1')
