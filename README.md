@@ -7,8 +7,10 @@
 
 ## 스킬 목록
 
+[docs/skills](docs/skills/README.md)
+
 | # | 스킬 | 하는 일 |
-|---|---|---|---|
+|---|---|---|
 | 1 | `/api-doc` | 변경된 API 의 명세서를 지정한 양식 HTML 로 만들어 브라우저로 연다. Jira 댓글에 붙여넣는 용도 |
 | 2 | `/commit` | 변경사항을 검토하고 Conventional Commits 형식으로 커밋한다. push 는 하지 않는다 |
 
