@@ -7,13 +7,12 @@
 
 ## 스킬 목록
 
-| # | 스킬 | 하는 일 | 호출 |
-|---|---|---|---|
-| 1 | `/api-doc` | 변경된 API 의 명세서를 지정한 양식 HTML 로 만들어 브라우저로 연다. Jira 댓글에 붙여넣는 용도 | 자동 · `/명령` |
-| 2 | `/refactor` | 지정한 파일 하나를 진단 → 전략 → 실행 → 검토 네 단계로 리팩토링한다. 원본은 두고 결과물을 `_workspace/output/` 에 만든다 | 자동 · `/명령` |
-| 3 | `/commit` | 변경사항을 검토하고 Conventional Commits 형식으로 커밋한다. push 는 하지 않는다 | `/명령` 전용 |
+[docs/skills](docs/skills/README.md)
 
-호출 열의 `/명령` 전용은 `disable-model-invocation: true` 라 말로 시켜서는 안 불려온다는 뜻이다.
+| # | 스킬 | 하는 일 |
+|---|---|---|
+| 1 | `/api-doc` | 변경된 API 의 명세서를 지정한 양식 HTML 로 만들어 브라우저로 연다. Jira 댓글에 붙여넣는 용도 |
+| 2 | `/commit` | 변경사항을 검토하고 Conventional Commits 형식으로 커밋한다. push 는 하지 않는다 |
 
 ---
 

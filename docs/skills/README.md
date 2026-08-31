@@ -4,5 +4,5 @@
 
 | 스킬 | 문서 | 산출물 |
 |---|---|---|
-| `/api-doc` | [api-doc](api-doc/DECISIONS.md) | `api-doc/output/` (git 무시) |
+| `/api-doc` | [api-doc](api-doc/DECISIONS.md) | `api-doc/output/` |
 | `/commit` | [commit](commit/DECISIONS.md) | — |
