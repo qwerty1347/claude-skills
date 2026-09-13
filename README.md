@@ -11,8 +11,8 @@
 
 | # | 스킬 | 하는 일 |
 |---|---|---|
-| 1 | `/api-doc` | 변경된 API 의 명세서를 지정한 양식 HTML 로 만들어 브라우저로 연다. Jira 댓글에 붙여넣는 용도 |
-| 2 | `/commit` | 변경사항을 검토하고 Conventional Commits 형식으로 커밋한다. push 는 하지 않는다 |
+| 1 | `/api-doc` | git diff 로 변경된 코드 내용을 확인하고 API 의 명세서를 만들어 지정한 양식 HTML 로 생성 |
+| 2 | `/commit` | 변경사항을 검토하고 Conventional Commits 형식으로 커밋 |
 
 ---
 
@@ -37,8 +37,8 @@ Claude Code 를 재시작하고 슬래시 명령이 자동완성에 뜨면 성�
 
 ```powershell
 New-Item -ItemType Junction `
-  -Path   "C:\Users\lee\.claude\skills" `
-  -Target "C:\xampp\htdocs\www\projects\harness\skills"
+  -Path   "C:\Users\{USERPROFILE}\.claude\skills" `
+  -Target "C:\projects\harness\skills"
 ```
 
 ### 다시 명렁어 입력어 하는 경우
@@ -48,13 +48,13 @@ New-Item -ItemType Junction `
 이미 걸려 있는 상태에서 위 명령을 실행하면 경로가 존재한다는 에러가 난다. 먼저 끊는다. (`-Recurse` 를 붙이지 않는다. 링크를 타고 들어가 원본 파일까지 지운다.)
 
 ```powershell
-Remove-Item "C:\Users\gng\.claude\skills" -Force
+Remove-Item "C:\Users\{USERPROFILE}\.claude\skills" -Force
 ```
 
 ### 확인 방법 명령어
 
 ```powershell
-Get-Item "C:\Users\gng\.claude\skills" | Select-Object LinkType, Target
+Get-Item "C:\Users\{USERPROFILE}\.claude\skills" | Select-Object LinkType, Target
 ```
 
 ### 확인 결과
@@ -62,7 +62,7 @@ Get-Item "C:\Users\gng\.claude\skills" | Select-Object LinkType, Target
 ```
 LinkType Target
 -------- ------
-Junction {C:\xampp\htdocs\www\projects\harness\skills}
+Junction {C:\projects\harness\skills}
 ```
 
 ## 스킬 추가하기
